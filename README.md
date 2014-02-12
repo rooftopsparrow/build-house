@@ -35,13 +35,13 @@ You are to write the following functions:
 
 7. get_max - takes a list of job names and the list of tasks then returns a list with the time and the job that finishes at the greatest time
 
-    ```
+    ```lisp
     (get_max '(frame roof select_subs) tasks)
     ```
 
     should return
 
-    ```
+    ```lisp
     (37 roof)	 ;since roof cannot finish until day 37
     ```
 
