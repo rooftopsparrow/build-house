@@ -15,11 +15,21 @@
     (assert-equal '(roof install_windows_doors) (predecessors 'vapor_barrier_insulation *tasks*))
 )
 
-(define-test test-gettime)
+(define-test test-gettime
+    (assert-equal 3 (gettime 'inside_paint *tasks*))
+    (assert-equal 14 (gettime 'get_bids *tasks*))
+)
 
-(define-test test-get-all-preds)
+(define-test test-get-all-preds
+    (assert-equal '() (get-all-preds 'purchase_lot *tasks*))
+    (assert-equal '(get_bids purchase_lot design_house) (get-all-preds 'select_subs *tasks*))
+    (assert-equal 
+        '(get_permit select_subs purchase_lot design_house get_bids) 
+        (get-all-preds 'excavate *tasks*)
+    )
+)
 
-(define-test precedes)
+(define-test test-precedes)
 
 (define-test test-start-day)
 
