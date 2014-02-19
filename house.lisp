@@ -49,3 +49,10 @@
         (union p (all-preds-helper p L))
     )
 )
+
+(defun precedes (first second L)
+    (let ((p (get-all-preds second L)))
+        (is-member first p)
+    )
+
+)

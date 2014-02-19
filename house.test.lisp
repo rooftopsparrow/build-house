@@ -34,7 +34,12 @@
     )
 )
 
-(define-test test-precedes)
+(define-test test-precedes
+    (assert-false (precedes 'purchase_lot 'design_house *tasks*))
+    (assert-true (precedes 'purchase_lot 'order_windows_doors *tasks*))
+    (assert-false (precedes 'outside_paint 'inside_paint *tasks*))
+    (assert-true (precedes 'roof 'drywall *tasks*))
+)
 
 (define-test test-start-day)
 
