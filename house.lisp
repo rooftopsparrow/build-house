@@ -16,6 +16,7 @@
 ; to be performed for a task in L
 (defun predecessors (task L)
     (cond
+        ((null task) nil)
         ((matchTask task L) (cddr (car L) ))
         ((predecessors task (cdr L)))
     )
@@ -29,13 +30,22 @@
     )
 )
 
+
+; return a list of all predecessors
+; for a given task
 (defun get-all-preds (task L)
-    (cond
-        ((null task) nil)
-        (
-            (let ((p (predecessors task L)))
-                (append p (get-all-preds (car p) L)) 
-            )
+
+    (defun all-preds-helper (tasks L)
+        (cond
+            ((null tasks) nil)
+            ((union (get-all-preds (car tasks) L) (all-preds-helper (cdr tasks) L)))
         )
+    )
+
+    (let
+        (
+            (p (predecessors task L))
+        )
+        (union p (all-preds-helper p L))
     )
 )

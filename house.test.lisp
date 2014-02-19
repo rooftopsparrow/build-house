@@ -24,8 +24,13 @@
     (assert-equal '() (get-all-preds 'purchase_lot *tasks*))
     (assert-equal '(get_bids purchase_lot design_house) (get-all-preds 'select_subs *tasks*))
     (assert-equal 
-        '(get_permit select_subs purchase_lot design_house get_bids) 
+        '(get_permit select_subs get_bids purchase_lot design_house)
         (get-all-preds 'excavate *tasks*)
+    )
+    (assert-equal
+        '(get_windows_doors rough_plumbing rough_electric order_windows_doors frame 
+            get_permit select_subs get_bids purchase_lot design_house)
+        (get-all-preds 'install_windows_doors *tasks*)
     )
 )
 
