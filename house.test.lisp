@@ -41,7 +41,11 @@
     (assert-true (precedes 'roof 'drywall *tasks*))
 )
 
-(define-test test-start-day)
+(define-test test-start-day
+    (assert-equal 0 (start-day 'purchase_lot *tasks*))
+    (assert-equal 7 (start-day 'get_permit *tasks*))
+    (assert-equal 25 (start-day 'construct_basement *tasks*))
+)
 
 (define-test test-get-max)
 
