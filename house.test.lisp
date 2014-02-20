@@ -2,8 +2,8 @@
 (load "lib/lisp-unit")
 (in-package :lisp-unit)
 
-(load "house")
-(load "data")
+(load "house") ; house functions
+(load "tasks") ; pulls in *tasks*
 
 (define-test test-sum
     (assert-equal 114 (sum *tasks*))
@@ -42,12 +42,15 @@
 )
 
 (define-test test-start-day
-    (assert-equal 0 (start-day 'purchase_lot *tasks*))
-    (assert-equal 7 (start-day 'get_permit *tasks*))
-    (assert-equal 25 (start-day 'construct_basement *tasks*))
+    (assert-equal 1 (start-day 'purchase_lot *tasks*))
+    (assert-equal 8 (start-day 'get_permit *tasks*))
+    (assert-equal 26 (start-day 'construct_basement *tasks*))
 )
 
-(define-test test-get-max)
+(define-test test-get-max
+    (assert-equal '(6 design_house) (get-max '(design_house purchase_lot ) *tasks*))
+    (assert-equal '(41 roof) (get-max '(frame roof select_subs) *tasks* ))
+)
 
 (define-test test-critical-path)
 

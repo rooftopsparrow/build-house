@@ -66,7 +66,7 @@
     ; Takes a list and returns the sum of days
     (defun start-day-helper (tasks L)
         (cond 
-            ((null tasks) 0)
+            ((null tasks) 1)
             ((+ (gettime (car tasks) L) (start-day-helper (cdr tasks) L) ))
         )
     )
@@ -76,7 +76,31 @@
     )
 )
 
-;returns the maximum time
-(defun get-max (tasks L)
-
+; Helper method to return 
+; the day a task will be finished
+(defun finished-day (task L)
+    (+ (gettime task L) (start-day task L))
 )
+
+; Takes a list of tasks and returns their times
+; in respective order
+(defun finished-times (tasks L)
+    (cond
+        ((null tasks) nil)
+        ((cons (finished-day (car tasks) L) (finished-times (cdr tasks) L)))
+    )
+)
+
+; takes a list tasks and returns 
+; the time and the job that finishes 
+; in the greatest time
+(defun get-max (tasks L)
+    (let*
+        (
+            (timeL (finished-times tasks L))
+            (maxT (apply #'max timeL))
+        )
+        (list maxT (at tasks (position maxT timeL)))
+    )
+)
+
