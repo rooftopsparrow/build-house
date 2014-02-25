@@ -11,8 +11,10 @@
 
 (define-test test-predecessors
     (assert-equal '() (predecessors 'purchase_lot *tasks*))
-    (assert-equal '(purchase_lot design_house) (predecessors 'get_permit *tasks*))
-    (assert-equal '(roof install_windows_doors) (predecessors 'vapor_barrier_insulation *tasks*))
+    (assert-equal '(purchase_lot design_house) 
+        (predecessors 'get_permit *tasks*))
+    (assert-equal '(roof install_windows_doors) 
+        (predecessors 'vapor_barrier_insulation *tasks*))
 )
 
 (define-test test-gettime
@@ -22,15 +24,33 @@
 
 (define-test test-get-all-preds
     (assert-equal '() (get-all-preds 'purchase_lot *tasks*))
-    (assert-equal '(get_bids purchase_lot design_house) (get-all-preds 'select_subs *tasks*))
+    (assert-equal '(get_bids purchase_lot design_house) 
+        (get-all-preds 'select_subs *tasks*))
     (assert-equal 
         '(get_permit select_subs get_bids purchase_lot design_house)
         (get-all-preds 'excavate *tasks*)
     )
     (assert-equal
-        '(get_windows_doors rough_plumbing rough_electric order_windows_doors frame 
-            get_permit select_subs get_bids purchase_lot design_house)
+        '(get_windows_doors rough_plumbing rough_electric 
+            order_windows_doors frame get_permit select_subs 
+            get_bids purchase_lot design_house)
         (get-all-preds 'install_windows_doors *tasks*)
+    )
+)
+
+(define-test test-critical-path
+    (assert-equal '() (critical-path 'design_house *tasks*))
+    (assert-equal '(design_house)
+        (critical-path 'get_permit *tasks*)
+    )
+    (assert-equal 
+        '(
+            install_windows_doors 
+            get_windows_doors 
+            order_windows_doors
+            design_house
+        )
+        (critical-path 'vapor_barrier_insulation *tasks*)
     )
 )
 
@@ -43,18 +63,23 @@
 
 (define-test test-start-day
     (assert-equal 1 (start-day 'purchase_lot *tasks*))
-    (assert-equal 8 (start-day 'get_permit *tasks*))
-    (assert-equal 26 (start-day 'construct_basement *tasks*))
+    (assert-equal 6 (start-day 'get_permit *tasks*))
+    (assert-equal 6 (start-day 'get_bids *tasks*))
+    (assert-equal 23 (start-day 'construct_basement *tasks*))
 )
 
 (define-test test-get-max
-    (assert-equal '(6 design_house) (get-max '(design_house purchase_lot ) *tasks*))
-    (assert-equal '(41 roof) (get-max '(frame roof select_subs) *tasks* ))
+    (assert-equal '(6 design_house) 
+        (get-max '(design_house purchase_lot) *tasks*))
+    (assert-equal '(38 roof) 
+        (get-max '(frame roof select_subs) *tasks* ))
 )
 
-(define-test test-critical-path)
 
-(define-test test-depends-on)
+(define-test test-depends-on
+    (assert-equal '(connections landscape) 
+        (depends-on 'move_house *tasks*))
+)
 
 
 (setq *print-errors* T)

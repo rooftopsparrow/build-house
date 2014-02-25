@@ -1,7 +1,7 @@
 (load "lib/lisp-unit") ; use lisp-unit framework
 (in-package :lisp-unit)
 
-(load "functions")
+(load "utils")
 
 ;; utility function testing
 
